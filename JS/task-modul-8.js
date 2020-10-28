@@ -71,8 +71,8 @@ const onCloseModalOverlay = document.querySelector('.lightbox');
 onCloseModalOverlay.addEventListener('click', onClickOverlay);
 
 function onClickOverlay(evt) {
-  if (evt.target === onCloseModalOverlay || evt.target === lightBoxButton)
-  console.log(ev.target)
+  if (evt.target === onCloseModalOverlay || evt.target === lightBoxButton);
+  
   lightBox.classList.remove('is-open');
   lightBoxImage.removeAttribute('src');
   lightBoxImage.removeAttribute("alt");
