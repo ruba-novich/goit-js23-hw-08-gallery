@@ -15,7 +15,8 @@ const galleryImages = createGalleryImages(gallery);
 
 galleryContainer.insertAdjacentHTML('afterbegin', galleryImages);
 
-
+const lightBox = document.querySelector('.lightbox');
+const lightBoxImage = document.querySelector('.lightbox__image');
 
 function createGalleryImages(gallery) {
         return gallery.map(({ preview, original, description }) => {
@@ -37,11 +38,7 @@ function createGalleryImages(gallery) {
         .join('');
 }
 
-
 galleryContainer.addEventListener('click', onClickImage);
-
-const lightBox = document.querySelector('.lightbox');
-const lightBoxImage = document.querySelector('.lightbox__image');
 
 function onClickImage(evt) {
   evt.preventDefault();
@@ -49,33 +46,28 @@ function onClickImage(evt) {
     return;
   }
   lightBox.classList.add('is-open');
-
   lightBoxImage.src = evt.target.dataset.source;
   lightBoxImage.alt = evt.target.alt;
 } 
 
-  const lightBoxButton = document.querySelector('.lightbox__button')
-  lightBoxButton.addEventListener('click', onCloseModal);
+const lightBoxButton = document.querySelector('.lightbox__button')
+lightBoxButton.addEventListener('click', onCloseModal);
 
   function onCloseModal(evt) {
-    if (evt.target.nodeName === 'IMG') {
-      return;
-    }
     lightBox.classList.remove('is-open');
     lightBoxImage.removeAttribute('src');
     lightBoxImage.removeAttribute("alt");
   }
 
-
 const onCloseModalOverlay = document.querySelector('.lightbox'); 
 onCloseModalOverlay.addEventListener('click', onClickOverlay);
 
 function onClickOverlay(evt) {
-  if (evt.target === onCloseModalOverlay || evt.target === lightBoxButton);
+  if (!evt.target.classList.contains('lightbox__overlay')){
+    return;
+  }
   
-  lightBox.classList.remove('is-open');
-  lightBoxImage.removeAttribute('src');
-  lightBoxImage.removeAttribute("alt");
+  onCloseModal();
 }
 
 const onBtnEscCloseModal = document.querySelector('lightbox__content');
@@ -83,9 +75,7 @@ window.addEventListener('keydown', onBtnEscPress);
 
 function onBtnEscPress(evt) {
   if (evt.code === 'Escape') {
-    lightBox.classList.remove('is-open');
-    lightBoxImage.removeAttribute('src');
-    lightBoxImage.removeAttribute("alt");
+    onCloseModal();
   }
 
 }
